@@ -11,7 +11,7 @@ import base64
 class RedeSimples(nn.Module):
     def __init__(self, num_classes=10):
         super().__init__()
-        self.features = nn.Sequential(
+        self.extrator = nn.Sequential(
             nn.Conv2d(1, 32, 3, padding=1),
             nn.BatchNorm2d(32),
             nn.ReLU(inplace=True),
@@ -21,7 +21,7 @@ class RedeSimples(nn.Module):
             nn.ReLU(inplace=True),
             nn.MaxPool2d(2),
         )
-        self.classifier = nn.Sequential(
+        self.classificador = nn.Sequential(
             nn.Flatten(),
             nn.Linear(64 * 7 * 7, 128),
             nn.ReLU(inplace=True),
@@ -30,7 +30,7 @@ class RedeSimples(nn.Module):
         )
 
     def forward(self, x):
-        return self.classifier(self.features(x))
+        return self.classificador(self.extrator(x))
 
 
 # Carrega o modelo treinado a partir do arquivo .pth
